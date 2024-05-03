@@ -1,0 +1,46 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+
+datasource db {
+  provider  = "postgresql"
+  url  	    = env("DATABASE_URL")
+
+}
+
+// run migration command to create sql table of the defined model
+// npx prisma migrate dev --name init
+//dev is used when we want to save the migration in our prisma directory so that we can refer later
+
+
+// if we make any changes in the model later then we have to execute generate command
+// npx prisma generate
+// then migrate prisma
+// npx prisma migrate dev --name new_name
+// it will create a new migration based on the changes we have made in the model
+
+
+model Employee {
+  id        Int      @id @default(autoincrement())
+  name      String
+  email     String   @unique
+  password  String
+  mobile    String
+  role      Role
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+enum Role {
+  INTERN
+  ENGINEER
+  ADMIN
+}
+
+model File {
+  id        Int      @id @default(autoincrement())
+  filename  String
+  path      String
+  mimetype  String
+}
